@@ -80,11 +80,9 @@ public class MainActivity extends Activity {
             int minr= 6;
             int rdiff=3;
             for (int i=0; i<9;i++){
-            	TableRow tableRow= new TableRow(this);
-            	
+            	TableRow tableRow= new TableRow(this);            	
             	table.addView(tableRow);
             	row=mySheet.getRow(minr);
-            	//for (int j=0; j<3;j++){
             		cell=row.getCell(1);
             		TextView Period = new TextView(this);
             		Period.setText(cell.toString().substring(0,1)+" ");
@@ -101,30 +99,47 @@ public class MainActivity extends Activity {
             		tableRow.addView(Time2);  		
             		cell=row.getCell(26*4+1);
             		TextView Subject2 = new TextView(this);
-            		Subject2.setText(cell.toString());
+            		try{
+            			Subject2.setText(cell.toString());
+            			tableRow.addView(Subject2);
+            			row=mySheet.getRow(minr+1);
+            			cell=row.getCell(26*4+1);
+            			TextView Teacher = new TextView(this);
+                		Teacher.setText(cell.toString()+" ");
+                		tableRow.addView(Teacher);
+                		
+                		
+                		row=mySheet.getRow(minr+2);
+                		cell=row.getCell(26*4+1);
+            			TextView ClassType = new TextView(this);
+                		ClassType.setText(cell.toString()+" ");
+                		tableRow.addView(ClassType);
+                		
+                		try{
+                			cell=row.getCell(26*4+2);
+                			TextView Room = new TextView(this);
+                			Room.setText(cell.toString()+" ");
+                			tableRow.addView(Room);
+                		}
+                		catch (Exception e){
+                			TextView Room = new TextView(this);
+                			Room.setText("No Room");
+                			tableRow.addView(Room);
+                		}
+            			
+            		}
+            		catch(Exception e){
+            			Subject2.setText("no Period");
+            			tableRow.addView(Subject2);
+            		}
+            		
             		//Subject2.setText("Bataslaaa");
-            		tableRow.addView(Subject2);
+            		
             	//}
             	minr+=rdiff;
             }
-            myWorkBook.close();
- 
+            myWorkBook.close();   
             
-            /** We now need something to iterate through the cells.**/
-            //Iterator<Row> rowIter = mySheet.rowIterator();
-            /*for (int i=0; i<3;i++) 
-            //while(rowIter.hasNext())
-            	{
-                HSSFRow myRow = (HSSFRow) rowIter.next();
-                Iterator<Cell> cellIter = myRow.cellIterator();
-                for (int j=0; j<3;j++)
-                	//while(cellIter.hasNext())
-                	{
-                    HSSFCell myCell = (HSSFCell) cellIter.next();
-                    Log.w("FileUtils", "Cell Value: " +  myCell.toString());
-                    Toast.makeText(this, "cell Value: " + myCell.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }*/
         }catch (Exception e){e.printStackTrace(); }
 
 
