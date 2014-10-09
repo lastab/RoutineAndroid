@@ -14,13 +14,19 @@ import org.apache.poi.ss.usermodel.Row;
 
 //import com.example.reoutines.R;
 
+
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView.FindListener;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +43,16 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 	    try{
+	    	String day;
+	    	String[] subject,teacher,room;
+	    	char classType;
+	    	int period;
+	    	Time[] startTime,endTime;
+	    	TextView Day= (TextView) findViewById(R.id.Day);
+	    	
+	    	TableLayout table=(TableLayout) findViewById(R.id.tableDisplay);
             // Creating Input Stream
-            File file = new File("/storage/sdcard0/as.xls");
+            File file = new File("/storage/sdcard0/asd.xls");
             
             FileInputStream myInput = new FileInputStream(file);
             
@@ -50,11 +64,34 @@ public class MainActivity extends Activity {
  
             // Get the first sheet from workbook
             HSSFSheet mySheet = myWorkBook.getSheetAt(0);
-            Iterator<Row> rowIter = mySheet.rowIterator();
-            Row row=mySheet.getRow(1);
-            Cell cell= row.getCell(1);
-            HSSFCell myCell=(HSSFCell) cell;
-            Toast.makeText(this, "cell Value: " + myCell.toString(), Toast.LENGTH_SHORT).show();
+            
+            Row row=mySheet.getRow(6);
+            Cell cell= row.getCell(0);
+            Day.setText(cell.toString());
+            
+            
+            
+            int minr= 6;
+            int rdiff=3;
+            for (int i=0; i<9;i++){
+            	TableRow tableRow= new TableRow(this);
+            	
+            	table.addView(tableRow);
+            	row=mySheet.getRow(minr);
+            	//for (int j=0; j<3;j++){
+            		cell=row.getCell(1);
+            		TextView Period = new TextView(this);
+            		Period.setText(cell.toString());
+            		tableRow.addView(Period);
+            		//Toast.makeText(this, "cell Value: " + cell.toString(), Toast.LENGTH_SHORT).show();
+            		cell=row.getCell(2);
+            		TextView Time = new TextView(this);
+            		Time.setText(cell.toString());
+            		tableRow.addView(Time);
+            	//}
+            	minr+=rdiff;
+            }
+            myWorkBook.close();
  
             
             /** We now need something to iterate through the cells.**/
