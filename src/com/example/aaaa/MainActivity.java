@@ -2,6 +2,7 @@ package com.example.aaaa;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -13,6 +14,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 //import com.example.reoutines.R;
+
 
 
 
@@ -43,12 +45,15 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 	    try{
-	    	String day;
+	    	String day,timeRange;
 	    	String[] subject,teacher,room;
 	    	char classType;
 	    	int period;
 	    	Time[] startTime,endTime;
 	    	TextView Day= (TextView) findViewById(R.id.Day);
+	    	SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
+	    	SimpleDateFormat sdf2 = new SimpleDateFormat("H:mm");
+	    	
 	    	
 	    	TableLayout table=(TableLayout) findViewById(R.id.tableDisplay);
             // Creating Input Stream
@@ -66,6 +71,7 @@ public class MainActivity extends Activity {
             HSSFSheet mySheet = myWorkBook.getSheetAt(0);
             
             Row row=mySheet.getRow(6);
+            Row row1=mySheet.getRow(6);
             Cell cell= row.getCell(0);
             Day.setText(cell.toString());
             
@@ -81,13 +87,23 @@ public class MainActivity extends Activity {
             	//for (int j=0; j<3;j++){
             		cell=row.getCell(1);
             		TextView Period = new TextView(this);
-            		Period.setText(cell.toString());
+            		Period.setText(cell.toString().substring(0,1)+" ");
             		tableRow.addView(Period);
             		//Toast.makeText(this, "cell Value: " + cell.toString(), Toast.LENGTH_SHORT).show();
             		cell=row.getCell(2);
-            		TextView Time = new TextView(this);
-            		Time.setText(cell.toString());
-            		tableRow.addView(Time);
+            		timeRange =cell.toString();
+            		//startTime[i]cell=timeRange.substring(0,9);
+            		TextView Time1 = new TextView(this);
+            		Time1.setText(timeRange.substring(0,9)+" ");
+            		tableRow.addView(Time1);
+            		TextView Time2 = new TextView(this);
+            		Time2.setText(timeRange.substring(11)+" ");
+            		tableRow.addView(Time2);  		
+            		cell=row.getCell(26*4+1);
+            		TextView Subject2 = new TextView(this);
+            		Subject2.setText(cell.toString());
+            		//Subject2.setText("Bataslaaa");
+            		tableRow.addView(Subject2);
             	//}
             	minr+=rdiff;
             }
