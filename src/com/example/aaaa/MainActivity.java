@@ -94,7 +94,9 @@ public class MainActivity extends Activity {
             
             for (int i=0; i<9;i++){
             	TableRow tableRow= new TableRow(this);
-            	tableRow.setBackgroundColor(Color.RED);
+            	if (i%2==0){
+            	tableRow.setBackgroundColor(Color.LTGRAY);
+            	}
             	tableRow.setLayoutParams(new TableLayout.LayoutParams(
             			TableLayout.LayoutParams.MATCH_PARENT,
             			TableLayout.LayoutParams.MATCH_PARENT,1.0f
@@ -108,8 +110,6 @@ public class MainActivity extends Activity {
                 			TableRow.LayoutParams.MATCH_PARENT,1.0f
                 			));
             		//Period.setTextSize(3, 10);
-            		Period.setBackgroundColor(Color.GREEN);
-            		
             		Period.setText(cell.toString().substring(0,1)+". ");
             		tableRow.addView(Period);
             		//Toast.makeText(this, "cell Value: " + cell.toString(), Toast.LENGTH_SHORT).show();
@@ -122,7 +122,6 @@ public class MainActivity extends Activity {
                 			TableRow.LayoutParams.MATCH_PARENT,1.0f
                 			));
             		//Time1.setTextSize(3, 10);
-            		Time1.setBackgroundColor(Color.BLUE);
             		Time1.setText(timeRange.substring(0,9)+" ");
             		tableRow.addView(Time1);
             		TextView Time2 = new TextView(this);
@@ -131,7 +130,6 @@ public class MainActivity extends Activity {
                 			TableRow.LayoutParams.MATCH_PARENT,1.0f
                 			));
             		//Time2.setTextSize(3, 10);
-            		Time2.setBackgroundColor(Color.LTGRAY);
             		Time2.setText(timeRange.substring(11)+" ");
             		tableRow.addView(Time2);  		
             		cell=row.getCell(26*4+1);
@@ -140,8 +138,7 @@ public class MainActivity extends Activity {
                 			TableRow.LayoutParams.MATCH_PARENT,
                 			TableRow.LayoutParams.MATCH_PARENT,1.0f
                 			));
-            		//Subject2.setTextSize(3, 10);
-            		Subject2.setBackgroundColor(Color.GREEN);
+            		//Subject2.setTextSize(3, 10);            	
             		try{
             			Subject2.setText(cell.toString());
             			tableRow.addView(Subject2);
@@ -152,8 +149,7 @@ public class MainActivity extends Activity {
                     			TableRow.LayoutParams.MATCH_PARENT,
                     			TableRow.LayoutParams.MATCH_PARENT,1.0f
                     			));
-            			//Teacher.setTextSize(3, 10);
-            			Teacher.setBackgroundColor(Color.GREEN);
+            			//Teacher.setTextSize(3, 10);            			
                 		Teacher.setText(cell.toString().trim());
                 		tableRow.addView(Teacher);
                 		
@@ -165,8 +161,7 @@ public class MainActivity extends Activity {
                     			TableRow.LayoutParams.MATCH_PARENT,
                     			TableRow.LayoutParams.MATCH_PARENT,1.0f
                     			));
-            			//ClassType.setTextSize(3, 10);
-            			ClassType.setBackgroundColor(Color.RED);
+            			//ClassType.setTextSize(3, 10);            			
                 		ClassType.setText(cell.toString().trim());
                 		tableRow.addView(ClassType);
                 		
@@ -177,8 +172,7 @@ public class MainActivity extends Activity {
                         			TableRow.LayoutParams.MATCH_PARENT,
                         			TableRow.LayoutParams.MATCH_PARENT,1.0f
                         			));
-                			//Room.setTextSize(3, 10);
-                			Room.setBackgroundResource(R.drawable.asd);;
+                			//Room.setTextSize(3, 10);                			
                 			Room.setText(cell.toString().trim());
                 			tableRow.addView(Room);
                 		}
