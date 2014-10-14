@@ -3,8 +3,10 @@ package com.example.aaaa;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 
+import android.graphics.Color;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -19,6 +21,9 @@ import org.apache.poi.ss.usermodel.Row;
 
 
 
+
+
+import android.R.color;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -75,50 +80,106 @@ public class MainActivity extends Activity {
             Cell cell= row.getCell(0);
             Day.setText(cell.toString());
             
+            Calendar calendar = Calendar.getInstance();
+            int today = calendar.get(Calendar.DAY_OF_WEEK); 
+            int minr= 6+((today-1)*39);
+            int rdiff=3;         
+            
+           
+            row=mySheet.getRow(minr);
+            cell= row.getCell(0);
+            Day.setText(cell.toString());
             
             
-            int minr= 6;
-            int rdiff=3;
+            
             for (int i=0; i<9;i++){
-            	TableRow tableRow= new TableRow(this);            	
+            	TableRow tableRow= new TableRow(this);
+            	tableRow.setBackgroundColor(Color.RED);
+            	tableRow.setLayoutParams(new TableLayout.LayoutParams(
+            			TableLayout.LayoutParams.MATCH_PARENT,
+            			TableLayout.LayoutParams.MATCH_PARENT,1.0f
+            			));
             	table.addView(tableRow);
             	row=mySheet.getRow(minr);
             		cell=row.getCell(1);
             		TextView Period = new TextView(this);
-            		Period.setText(cell.toString().substring(0,1)+" ");
+            		Period.setLayoutParams(new TableRow.LayoutParams(
+                			TableRow.LayoutParams.MATCH_PARENT,
+                			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                			));
+            		//Period.setTextSize(3, 10);
+            		Period.setBackgroundColor(Color.GREEN);
+            		
+            		Period.setText(cell.toString().substring(0,1)+". ");
             		tableRow.addView(Period);
             		//Toast.makeText(this, "cell Value: " + cell.toString(), Toast.LENGTH_SHORT).show();
             		cell=row.getCell(2);
             		timeRange =cell.toString();
             		//startTime[i]cell=timeRange.substring(0,9);
             		TextView Time1 = new TextView(this);
+            		Time1.setLayoutParams(new TableRow.LayoutParams(
+                			TableRow.LayoutParams.MATCH_PARENT,
+                			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                			));
+            		//Time1.setTextSize(3, 10);
+            		Time1.setBackgroundColor(Color.BLUE);
             		Time1.setText(timeRange.substring(0,9)+" ");
             		tableRow.addView(Time1);
             		TextView Time2 = new TextView(this);
+            		Time2.setLayoutParams(new TableRow.LayoutParams(
+                			TableRow.LayoutParams.MATCH_PARENT,
+                			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                			));
+            		//Time2.setTextSize(3, 10);
+            		Time2.setBackgroundColor(Color.LTGRAY);
             		Time2.setText(timeRange.substring(11)+" ");
             		tableRow.addView(Time2);  		
             		cell=row.getCell(26*4+1);
             		TextView Subject2 = new TextView(this);
+            		Subject2.setLayoutParams(new TableRow.LayoutParams(
+                			TableRow.LayoutParams.MATCH_PARENT,
+                			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                			));
+            		//Subject2.setTextSize(3, 10);
+            		Subject2.setBackgroundColor(Color.GREEN);
             		try{
             			Subject2.setText(cell.toString());
             			tableRow.addView(Subject2);
             			row=mySheet.getRow(minr+1);
             			cell=row.getCell(26*4+1);
             			TextView Teacher = new TextView(this);
-                		Teacher.setText(cell.toString()+" ");
+            			Teacher.setLayoutParams(new TableRow.LayoutParams(
+                    			TableRow.LayoutParams.MATCH_PARENT,
+                    			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                    			));
+            			//Teacher.setTextSize(3, 10);
+            			Teacher.setBackgroundColor(Color.GREEN);
+                		Teacher.setText(cell.toString().trim());
                 		tableRow.addView(Teacher);
                 		
                 		
                 		row=mySheet.getRow(minr+2);
                 		cell=row.getCell(26*4+1);
             			TextView ClassType = new TextView(this);
-                		ClassType.setText(cell.toString()+" ");
+            			ClassType.setLayoutParams(new TableRow.LayoutParams(
+                    			TableRow.LayoutParams.MATCH_PARENT,
+                    			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                    			));
+            			//ClassType.setTextSize(3, 10);
+            			ClassType.setBackgroundColor(Color.RED);
+                		ClassType.setText(cell.toString().trim());
                 		tableRow.addView(ClassType);
                 		
                 		try{
                 			cell=row.getCell(26*4+2);
                 			TextView Room = new TextView(this);
-                			Room.setText(cell.toString()+" ");
+                			Room.setLayoutParams(new TableRow.LayoutParams(
+                        			TableRow.LayoutParams.MATCH_PARENT,
+                        			TableRow.LayoutParams.MATCH_PARENT,1.0f
+                        			));
+                			//Room.setTextSize(3, 10);
+                			Room.setBackgroundResource(R.drawable.asd);;
+                			Room.setText(cell.toString().trim());
                 			tableRow.addView(Room);
                 		}
                 		catch (Exception e){
