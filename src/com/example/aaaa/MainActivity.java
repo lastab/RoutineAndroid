@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		TableRow[] Trow= new TableRow[9];
 		Date[] startTime=new Date[9], 	endTime=new Date[9];
+		TextView Day= (TextView) findViewById(R.id.Day);
 	    try{
 	    	String day,timeRange;
 	    	String[] subject,teacher,room;
@@ -63,7 +64,7 @@ public class MainActivity extends Activity {
 	    	int period;
 	    	String temp;
 	    	
-	    	TextView Day= (TextView) findViewById(R.id.Day);  	
+	    	  	
 	    	
 	    	TableLayout table=(TableLayout) findViewById(R.id.tableDisplay);
             // Creating Input Stream
@@ -207,10 +208,12 @@ public class MainActivity extends Activity {
     	    
         }catch (Exception e){}
 
+	    try{getCurrentClass(Trow, startTime, endTime);}
+	    catch(Exception e){
+	    	Day.setText(e.toString());
+	    }
 
-
-	    //	getCurrentClass(Trow, startTime, endTime);
-		return true;
+	    return true;
 	}
 
 	@Override
@@ -231,13 +234,19 @@ public class MainActivity extends Activity {
         return;
     }
 	private  void getCurrentClass(TableRow[] row, Date[] Stime,Date[] Etime ){
-		Date date=  new Date();	    
+		Date date=  new Date();
+		String s=formatter.format(date);
+		try{
+		date=formatter.parse(s);
+		
 		for (int i=0;i<9;i++){
-			if (formatter.format(Stime).compareTo(formatter.format(date))>0){
+			if (date.after(Stime[i])&& date.before(Etime[i])){
 				row[i].setBackgroundColor(Color.GREEN);
 			}
+		}
+		}
+		catch(Exception e){
 			
-			//compare time here
 		}
 	}
 }
