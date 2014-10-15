@@ -2,11 +2,14 @@ package com.example.aaaa;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 import android.graphics.Color;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -16,6 +19,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 //import com.example.reoutines.R;
+
+
 
 
 
@@ -38,7 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
+	DateFormat formatter = new SimpleDateFormat("hh:mma");
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,16 +54,16 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		TableRow[] Trow= new TableRow[9];
+		Date[] startTime=new Date[9], 	endTime=new Date[9];
 	    try{
 	    	String day,timeRange;
 	    	String[] subject,teacher,room;
 	    	char classType;
 	    	int period;
-	    	Time[] startTime,endTime;
-	    	TextView Day= (TextView) findViewById(R.id.Day);
-	    	SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
-	    	SimpleDateFormat sdf2 = new SimpleDateFormat("H:mm");
+	    	String temp;
 	    	
+	    	TextView Day= (TextView) findViewById(R.id.Day);  	
 	    	
 	    	TableLayout table=(TableLayout) findViewById(R.id.tableDisplay);
             // Creating Input Stream
@@ -76,7 +81,7 @@ public class MainActivity extends Activity {
             HSSFSheet mySheet = myWorkBook.getSheetAt(0);
             
             Row row=mySheet.getRow(6);
-            Row row1=mySheet.getRow(6);
+            
             Cell cell= row.getCell(0);
             Day.setText(cell.toString());
             
@@ -122,7 +127,11 @@ public class MainActivity extends Activity {
                 			TableRow.LayoutParams.MATCH_PARENT,1.0f
                 			));
             		//Time1.setTextSize(3, 10);
-            		Time1.setText(timeRange.substring(0,9)+" ");
+            		temp=timeRange.substring(0,9);            		
+            		Time1.setText(temp);
+            		temp=temp.replace(".", "");
+            		startTime[i] = (Date)formatter.parse(temp.trim());
+
             		tableRow.addView(Time1);
             		TextView Time2 = new TextView(this);
             		Time2.setLayoutParams(new TableRow.LayoutParams(
@@ -130,7 +139,10 @@ public class MainActivity extends Activity {
                 			TableRow.LayoutParams.MATCH_PARENT,1.0f
                 			));
             		//Time2.setTextSize(3, 10);
-            		Time2.setText(timeRange.substring(11)+" ");
+            		temp=timeRange.substring(11);            		
+            		Time2.setText(temp);
+            		temp=temp.replace(".", "");
+            		endTime[i] = (Date)formatter.parse(temp.trim());
             		tableRow.addView(Time2);  		
             		cell=row.getCell(26*4+1);
             		TextView Subject2 = new TextView(this);
@@ -186,18 +198,18 @@ public class MainActivity extends Activity {
             		catch(Exception e){
             			Subject2.setText("no Period");
             			tableRow.addView(Subject2);
-            		}
-            		
-            		//Subject2.setText("Bataslaaa");
-            		
-            	//}
+            		}    		
+            	Trow[i]=tableRow;	
             	minr+=rdiff;
+            	
             }
             myWorkBook.close();   
-            
-        }catch (Exception e){e.printStackTrace(); }
+    	    
+        }catch (Exception e){}
 
 
+
+	    //	getCurrentClass(Trow, startTime, endTime);
 		return true;
 	}
 
@@ -218,5 +230,14 @@ public class MainActivity extends Activity {
             
         return;
     }
- 
+	private  void getCurrentClass(TableRow[] row, Date[] Stime,Date[] Etime ){
+		Date date=  new Date();	    
+		for (int i=0;i<9;i++){
+			if (formatter.format(Stime).compareTo(formatter.format(date))>0){
+				row[i].setBackgroundColor(Color.GREEN);
+			}
+			
+			//compare time here
+		}
+	}
 }
